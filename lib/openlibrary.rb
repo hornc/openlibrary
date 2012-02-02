@@ -4,6 +4,7 @@ require 'openlibrary/view'
 require 'openlibrary/client'
 require 'openlibrary/errors'
 require 'openlibrary/request'
+require 'openlibrary/list'
 
 module Openlibrary
   # Create a new Openlibrary::Client instance
