@@ -1,6 +1,6 @@
 module Openlibrary
 
-  class List
+  class Lists
     attr_accessor :entries
 
     def self.find_by_user(user)
