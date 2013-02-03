@@ -9,12 +9,13 @@ module Openlibrary
       begin
         response = RestClient.get request_url
         response_data = JSON.parse(response)
-        lists.entries = response_data['entries'].collect {|e| List.new(e)}
+        lists.entries = response_data['entries'].collect {|entry| List.new(entry)}
         lists.size = response_data['size']
         lists.links = response_data['links']
         lists
       rescue Exception => e
-        puts "Unable to get lists for user '#{user}': #{e.http_code}"
+        e = e.http_code if e.is_a?(RestClient::Exception)
+        puts "Unable to get lists for user '#{user}': #{e}"
         return nil
       end
     end
@@ -24,9 +25,20 @@ module Openlibrary
   end
 
   class List
+    attr_accessor :url
+    attr_accessor :links, :meta, :name, :description, :seed_count, :edition_count
+    attr_accessor :seeds, :editions, :subjects
 
-    def seeds
-    
+    def initialize(entry)
+      @url = entry["url"]
+      request_url = "http://openlibrary.org#{@url}.json"
+      begin
+        response = RestClient.get request_url
+        response_data = JSON.parse(response)
+        @name = response_data['name']
+      rescue Exception => e
+         puts "Something went wrong: #{e}"
+      end
     end
   end
 end
