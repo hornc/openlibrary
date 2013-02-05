@@ -43,14 +43,14 @@ describe Openlibrary::Lists do
   end
 
   describe ".find_by_user" do
-  	  subject { Openlibrary::Lists.find_by_user('hornc') }
-      it { should be_an_instance_of(Openlibrary::Lists) }
+    subject { Openlibrary::Lists.find_by_user('hornc') }
+    it { should be_an_instance_of(Openlibrary::Lists) }
   end
 
   describe ".find_by_seed" do
-  	  subject { Openlibrary::Lists.find_by_seed('some_seed') }
-  	  it "should return a Lists collection"
-      # it { should be_an_instance_of(Openlibrary::Lists) }
+    subject { Openlibrary::Lists.find_by_seed('some_seed') }
+    it "should return a Lists collection"
+    # it { should be_an_instance_of(Openlibrary::Lists) }
   end
 end
 
@@ -63,7 +63,8 @@ describe Openlibrary::List do
             "last_update" => "2010-12-21T04:17:33.140325",
             "seed_count" => 28,
             "edition_count" => 2105
-    }) }
+            })
+    }
 
     it { should be_an_instance_of(Openlibrary::List) }
 
