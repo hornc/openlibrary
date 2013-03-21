@@ -1,7 +1,12 @@
+require 'forwardable'
+
 module Openlibrary
 
   class Lists
+    include Enumerable
+    extend Forwardable
     attr_accessor :links, :size, :entries
+    def_delegators :@entries, :each, :<<
 
     def self.find_by_user(user)
       request_url = "http://openlibrary.org/people/#{user}/lists.json"

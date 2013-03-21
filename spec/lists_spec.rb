@@ -10,10 +10,7 @@ describe Openlibrary::Lists do
     it { should respond_to(:entries) }
     it { should respond_to(:links) }
     it { should respond_to(:size) }
-    #it { should respond_to(:each) }
-    it "should respond to method 'each'" do
-      pending "Need to make Lists an Enumerable"
-    end
+    it { should respond_to(:each) }
   end
    
   context "user has lists" do
