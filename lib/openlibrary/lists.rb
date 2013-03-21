@@ -6,7 +6,7 @@ module Openlibrary
     include Enumerable
     extend Forwardable
     attr_accessor :links, :size, :entries
-    def_delegators :@entries, :each, :<<
+    def_delegators :@entries, :each, :[], :last
 
     def self.find_by_user(user)
       request_url = "http://openlibrary.org/people/#{user}/lists.json"
@@ -41,6 +41,14 @@ module Openlibrary
         response = RestClient.get request_url
         response_data = JSON.parse(response)
         @name = response_data['name']
+        @description = response_data['description']
+        @meta = response_data['meta']
+        @links = response_data['links']
+        @seed_count = response_data['seed_count']
+        @edition_count = response_data['edition_count']
+        @seeds    = response_data['links']['seeds']
+        @editions = response_data['links']['editions']
+        @subjects = response_data['links']['subjects']
       rescue Exception => e
          puts "Something went wrong: #{e}"
       end
