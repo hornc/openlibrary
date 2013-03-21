@@ -97,7 +97,11 @@ describe Openlibrary::List do
     it "should return a populated name" do
   	  @single_list.name.should be_an_instance_of(String)
       @single_list.name.should_not be_empty
-      puts @single_list.name
+    end
+
+    it "should return a populated description" do
+      @single_list.description.should be_an_instance_of(String)
+      @single_list.description.should_not be_empty
     end
   end
 end
