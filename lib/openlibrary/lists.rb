@@ -30,27 +30,60 @@ module Openlibrary
   end
 
   class List
-    attr_accessor :url
-    attr_accessor :links, :meta, :name, :description, :seed_count, :edition_count
-    attr_accessor :seeds, :editions, :subjects
+    attr_accessor :url, :name, :seed_count, :edition_count
 
     def initialize(entry)
-      @url = entry["url"]
+      @url = entry['url']
+      @name = entry['name']
+      @seed_count = entry['seed_count']
+      @edition_count = entry['edition_count']
+    end
+
+    def initialize_from_api
       request_url = "http://openlibrary.org#{@url}.json"
       begin
         response = RestClient.get request_url
         response_data = JSON.parse(response)
-        @name = response_data['name']
         @description = response_data['description']
         @meta = response_data['meta']
         @links = response_data['links']
-        @seed_count = response_data['seed_count']
-        @edition_count = response_data['edition_count']
-        @seeds    = response_data['links']['seeds']
-        @editions = response_data['links']['editions']
-        @subjects = response_data['links']['subjects']
       rescue Exception => e
-         puts "Something went wrong: #{e}"
+        puts "Something went wrong: #{e}"
+      end
+    end
+
+    def links
+      initialize_from_api if @links.nil?
+      @links
+    end
+
+    def description
+      initialize_from_api if @description.nil?
+      @description
+    end
+
+    def meta
+      initialize_from_api if @meta.nil?
+      @meta
+    end
+
+    def seeds
+      @seeds ||= initialize_attribute('seeds')
+    end
+
+    def editions
+      @editions ||= initialize_attribute('editions')
+    end
+
+    def subjects
+      @subjects ||= initialize_attribute('subjects')
+    end
+
+    def initialize_attribute(name)
+      begin
+        JSON.parse(RestClient.get('http://openlibrary.org'+@links[name]+'.json'))
+      rescue Exception => e
+        puts "Unable to retrieve #{name}: #{e}"
       end
     end
   end

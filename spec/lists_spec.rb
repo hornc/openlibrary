@@ -52,16 +52,20 @@ describe Openlibrary::Lists do
 end
 
 describe Openlibrary::List do
-  context "base List" do
-    subject { Openlibrary::List.new({
-            "url" => "/people/hornc/lists/OL15227L",
-            "full_url" => "/people/george08/lists/OL43L/Top_100_Works_in_World_Literature_(in_progress)",
-            "name" => "Top 100 Works in World Literature (in progress)",
-            "last_update" => "2010-12-21T04:17:33.140325",
-            "seed_count" => 28,
-            "edition_count" => 2105
-            })
+  before(:all) do
+    @entry = {
+          "url" => "/people/hornc/lists/OL15227L",
+          "full_url" => "/people/george08/lists/OL43L/Top_100_Works_in_World_Literature_(in_progress)",
+          "name" => "Top 100 Works in World Literature (in progress)",
+          "last_update" => "2010-12-21T04:17:33.140325",
+          "seed_count" => 28,
+          "edition_count" => 2105
     }
+    @single_list = Openlibrary::List.new(@entry)
+  end
+
+  context "base List" do
+    subject { @single_list }
 
     it { should be_an_instance_of(Openlibrary::List) }
 
@@ -79,29 +83,23 @@ describe Openlibrary::List do
   end
 
   context "list exists" do
-    before do
-      @entry = {
-            "url" => "/people/hornc/lists/OL15227L",
-            "full_url" => "/people/george08/lists/OL43L/Top_100_Works_in_World_Literature_(in_progress)",
-            "name" => "Top 100 Works in World Literature (in progress)",
-            "last_update" => "2010-12-21T04:17:33.140325",
-            "seed_count" => 28,
-            "edition_count" => 2105
-      }
-      @single_list = Openlibrary::List.new(@entry)
-    end
     it "should return a url" do
       @single_list.url.should == @entry["url"]
     end
 
     it "should return a populated name" do
-  	  @single_list.name.should be_an_instance_of(String)
+      @single_list.name.should be_an_instance_of(String)
       @single_list.name.should_not be_empty
     end
 
     it "should return a populated description" do
       @single_list.description.should be_an_instance_of(String)
       @single_list.description.should_not be_empty
+    end
+
+    it "should return a populated list of seeds when queried" do
+      seeds = @single_list.seeds
+      seeds.should_not be_empty
     end
   end
 end
