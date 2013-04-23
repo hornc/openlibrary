@@ -1,8 +1,7 @@
 require 'forwardable'
 
 module Openlibrary
-
-  class Lists
+  module Lists
     include Enumerable
     extend Forwardable
     attr_accessor :links, :size, :entries
