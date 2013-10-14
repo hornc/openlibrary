@@ -1,3 +1,6 @@
+== lists2 branch
+This is a pretty much aborted attempt to rebase my lists addition to some of the latest changes to Openlibrary. It has moved on too much. The last working version of Lists on the very old code is on my lists1 branch. I'm going to attempt to re-add Lists API functionality to the latest, much better, structure on a new, different, branch. I will delete this branch when I'm done.
+
 == Openlibrary 2.0.0
 
 The openlibrary gem provides Ruby clients for the {Open Library REST API}[http://openlibrary.org/dev/docs/restful_api] and {Books API}[http://openlibrary.org/dev/docs/api/books].
