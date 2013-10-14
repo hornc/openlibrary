@@ -42,10 +42,13 @@ module Openlibrary
       request_url = "http://openlibrary.org#{@url}.json"
       begin
         response = RestClient.get request_url
-        response_data = JSON.parse(response)
-        @description = response_data['description']
-        @meta = response_data['meta']
-        @links = response_data['links']
+        data = JSON.parse(response)
+        @name = data['name']
+        @description = data['description']
+        @meta = data['meta']
+        @links = data['links']
+        @seed_count = data['seed_count']
+        @edition_count = data['edition_count']
       rescue Exception => e
         puts "Something went wrong: #{e}"
       end
@@ -80,10 +83,15 @@ module Openlibrary
 
     def initialize_attribute(name)
       begin
-        JSON.parse(RestClient.get('http://openlibrary.org'+@links[name]+'.json'))
+        attribute = JSON.parse(RestClient.get('http://openlibrary.org'+@links[name]+'.json'))
+        attribute['entries']
       rescue Exception => e
         puts "Unable to retrieve #{name}: #{e}"
       end
+    end
+
+    class Book_Proxy
+
     end
   end
 end

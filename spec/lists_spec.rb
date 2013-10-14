@@ -19,6 +19,7 @@ describe Openlibrary::Lists do
       @lists.entries.should be_an_instance_of(Array)
       @lists.size.should be_an_instance_of(Fixnum)
       @lists.links.should be_an_instance_of(Hash)
+      @lists.each {|list| puts "#{list.name} Seeds: #{list.seed_count} Editions: #{list.edition_count} URL: #{list.url}" }
     end
 
     it "should have (size) entries" do
@@ -54,7 +55,7 @@ end
 describe Openlibrary::List do
   before(:all) do
     @entry = {
-          "url" => "/people/hornc/lists/OL15227L",
+          "url" => "/people/hornc/lists/OL15186L",
           "full_url" => "/people/george08/lists/OL43L/Top_100_Works_in_World_Literature_(in_progress)",
           "name" => "Top 100 Works in World Literature (in progress)",
           "last_update" => "2010-12-21T04:17:33.140325",
@@ -100,6 +101,9 @@ describe Openlibrary::List do
     it "should return a populated list of seeds when queried" do
       seeds = @single_list.seeds
       seeds.should_not be_empty
+      puts seeds[0]
+      seeds.each {|s| puts "#{s['title']} [#{s['type']}]"}
+      puts @single_list.seed_count
     end
   end
 end
